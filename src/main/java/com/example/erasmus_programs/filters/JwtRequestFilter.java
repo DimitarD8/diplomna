@@ -43,6 +43,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             try {
 
 
+
                 String signingKey = kafkaConsumerService.getSecretKey();
                 Claims claims = Jwts.parserBuilder()
                         .setSigningKey(signingKey.getBytes(StandardCharsets.UTF_8)) // Ensure consistent encoding
