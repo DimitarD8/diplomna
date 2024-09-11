@@ -33,6 +33,20 @@ public class NewsService {
         return newsRepository.save(news);
     }
 
+    public News updateNews(Long id, String title, MultipartFile imageFile, String postedBy) throws IOException {
+        News news = newsRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("News with Id not found " + id));
+
+        news.setTitle(title);
+        if (imageFile != null && !imageFile.isEmpty()) {
+            news.setImage(imageFile.getBytes());
+        }
+        news.setPostedBy(postedBy);
+        news.setDatePosted(LocalDate.now());
+
+        return newsRepository.save(news);
+    }
+
     public void deleteNews(Long id) {
         newsRepository.deleteById(id);
     }

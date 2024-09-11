@@ -55,7 +55,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 System.out.println("Unable to get JWT Token");
             } catch (SignatureException e) {
                 System.out.println("JWT Token has expired or is incorrect");
-                e.printStackTrace(); // Add more detailed logging
+                e.printStackTrace();
             }
         }
 

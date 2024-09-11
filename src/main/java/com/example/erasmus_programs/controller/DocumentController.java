@@ -1,5 +1,6 @@
 package com.example.erasmus_programs.controller;
 
+import com.example.erasmus_programs.dto.document.DocumentRequestDto;
 import com.example.erasmus_programs.entity.Document;
 import com.example.erasmus_programs.service.DocumentService;
 import lombok.AllArgsConstructor;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/documents")
@@ -29,13 +31,14 @@ public class DocumentController {
         }
     }
 
-    @GetMapping("/download/{fileName}")
-    public ResponseEntity<byte[]> downloadFile(@PathVariable String fileName) {
-        Document pdfFile = documentService.getFile(fileName);
+    @GetMapping(path = "/download")
+    public ResponseEntity<byte[]> downloadDocument(@RequestParam Long documentId) {
+        Document document = documentService.getDocumentById(documentId);
+
         return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + document.getFileName() + "\"")
                 .contentType(MediaType.APPLICATION_PDF)
-                .header(HttpHeaders.CONTENT_DISPOSITION, "view; filename=\"" + pdfFile.getFileName() + "\"")
-                .body(pdfFile.getData());
+                .body(document.getData());
     }
 
     @PutMapping("/update/{id}")

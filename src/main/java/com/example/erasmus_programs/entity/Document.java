@@ -25,17 +25,9 @@ public class Document {
     private byte[] data;
 
     @ManyToOne
-    @JoinColumn(name = "doctoralMobility_id")
-    @JsonBackReference
-    private DoctoralMobility doctoralMobility;
+    @JoinColumn(name = "mobility_id")
+    @JsonBackReference("mobility-documents")
+    private Mobility mobility;
 
-    @ManyToOne
-    @JoinColumn(name = "studentMobility_id")
-    @JsonBackReference
-    private StudentMobility studentMobility;
-
-    @ManyToOne
-    @JoinColumn(name = "teacherMobility_id")
-    @JsonBackReference
-    private TeacherMobility teacherMobility;
+    
 }

@@ -44,6 +44,16 @@ public class NewsController {
         return new ResponseEntity<>(news, HttpStatus.CREATED);
     }
 
+    @PutMapping(value = "/{id}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<News> updateNews(
+            @PathVariable Long id,
+            @RequestParam("title") String title,
+            @RequestParam(value = "image", required = false) MultipartFile image,
+            @RequestParam("postedBy") String postedBy) throws IOException {
+        News updatedNews = newsService.updateNews(id, title, image, postedBy);
+        return new ResponseEntity<>(updatedNews, HttpStatus.OK);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteNews(@PathVariable Long id) {
         newsService.deleteNews(id);
